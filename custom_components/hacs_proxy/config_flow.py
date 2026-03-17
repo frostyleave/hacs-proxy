@@ -37,14 +37,17 @@ class ProxyFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     @staticmethod
     @callback
-    def async_get_options_flow(config_entry):
+    def async_get_options_flow(config_entry: config_entries.ConfigEntry,
+    ) -> config_entries.OptionsFlow:
         return ProxyOptionsFlowHandler(config_entry)
 
 
 class ProxyOptionsFlowHandler(config_entries.OptionsFlow):
 
+    _config_entry: config_entries.ConfigEntry
+
     def __init__(self, config_entry):
-        self.config_entry = config_entry
+        self._config_entry = config_entry
 
     async def async_step_init(self, _user_input=None):
         return await self.async_step_user()
